@@ -169,7 +169,7 @@ select s_id from fruits group by s_id;
 -- 根据s_id对fruits表中的数据进行分组，将每个供应商的水果名称显示出来
 
 -- 根据s_id对fruits表中的数据进行分组，并显示水果种类大于1的分组信息
-elect s_id  from fruits f1 where (select count(*) from fruits f2 where f2.s_id = f1.s_id)>1 group by s_id;
+select s_id  from fruits f1 where (select count(*) from fruits f2 where f2.s_id = f1.s_id)>1 group by s_id;
 -- 根据s_id对fruits表中的数据进行分组，并显示记录数量
 select count(*) from fruits group by s_id;
 -- 根据s_id和f_name字段对fruits表中的数据进行分组， SQL语句如下，
@@ -197,9 +197,9 @@ VALUES(30001, 1, 'a1', 10, 5.2),
 (30005, 3, 'a2', 10, 2.2),
 (30005, 4, 'm1', 5, 14.99);
 -- 查询订单价格大于100的订单号和总订单价格
-select o_num,quantity*item_price sum_price from orderitems where quantity*item_price > 100;
+select o_num,sum(quantity*item_price) sum_price from orderitems group by o_num having sum(quantity*item_price) >100;
 -- 将以上内容使用ORDER BY关键字按总订单价格排序显示结果
-select o_num,quantity*item_price sum_price from orderitems where quantity*item_price > 100 order by quantity*item_price;
+select o_num,sum(quantity*item_price) sum_price from orderitems group by o_num having sum(quantity*item_price) >100 order by sum(quantity*item_price);
 -- 显示fruits表查询结果的前4行
 select * from fruits limit 4;
 -- 在fruits表中，使用LIMIT子句，返回从第5个记录开始的，行数长度为3的记录
